@@ -38,9 +38,11 @@ resource "aws_amplify_domain_association" "custom_domain" {
 
   sub_domain {
     prefix       = var.subdomain_prefix  
-    branch_name  = "main" 
+    branch_name  = "main"  # Ensure the "main" branch is available in your GitHub repository
   }
 }
+
+
 
 # Create a Route 53 CNAME Record for the Subdomain
 resource "aws_route53_record" "lifely_tracker_cname" {
