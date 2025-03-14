@@ -38,7 +38,7 @@ resource "aws_amplify_domain_association" "custom_domain" {
 
   sub_domain {
     prefix       = var.subdomain_prefix  
-    branch_name  = var.amplify_branch   
+    branch_name  = "main" 
   }
 }
 

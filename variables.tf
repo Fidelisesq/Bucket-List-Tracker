@@ -33,12 +33,14 @@ variable "subdomain_prefix" {
   default     = "lifely-tracker"
 }
 
+/*
 # The branch name for Amplify deployment
 variable "amplify_branch" {
   description = "The branch of the GitHub repo to be deployed"
   type        = string
   default     = "main"
 }
+*/
 
 # Route 53 hosted zone ID for creating the CNAME record
 variable "hosted_zone_id" {
