@@ -1,4 +1,4 @@
-name: Terraform Deployment
+name: Bucket-List-Tracker Terraform Deployment
 
 on:
   push:
