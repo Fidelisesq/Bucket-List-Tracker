@@ -9,7 +9,7 @@ variable "region" {
 variable "github_repository" {
   description = "The GitHub repository URL for the frontend app"
   type        = string
-  default     = "https://github.com/Fidelisesq/Bucket-List-Tracker"
+  default     = "https://github.com/Fidelisesq/Bucket-List-Tracker.git"
 }
 
  #GitHub OAuth token
