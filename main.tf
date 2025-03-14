@@ -93,3 +93,13 @@ resource "aws_s3_bucket" "bucket_list_storage" {
 output "amplify_app_url" {
   value = aws_amplify_app.bucket_list_app.default_domain
 }
+
+terraform {
+  backend "s3" {
+    bucket = "foz-terraform-state-bucket"
+    key = "infra.tfstate"
+    region = "us-east-1"
+    encrypt = true
+}
+}
+
