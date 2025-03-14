@@ -12,6 +12,12 @@ variable "github_repository" {
   default     = "https://github.com/Fidelisesq/Bucket-List-Tracker"
 }
 
+ #GitHub OAuth token
+variable "oauth_token" {
+  description = "The GitHub token to connect AWS Amplify"
+  type        = string
+}
+
 # The custom domain to be associated with the Amplify app
 variable "custom_domain" {
   description = "The custom domain name for the app"
