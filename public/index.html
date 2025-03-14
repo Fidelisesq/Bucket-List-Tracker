@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bucket List Tracker</title>
+
+    <!-- Meta description for SEO -->
+    <meta name="description" content="Track and manage your bucket list items easily with AWS Amplify in a React app." />
+
+    <!-- Include Favicon -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+
+    <!-- Include AWS Amplify CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@aws-amplify/ui-react/styles.css"
+    />
+
+    <!-- Add custom styles if needed -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fb;
+        margin: 0;
+        padding: 0;
+      }
+
+      .app-container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #4a90e2;
+      }
+
+      h2 {
+        text-align: center;
+        color: #888;
+      }
+
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      button {
+        padding: 10px 15px;
+        background-color: #4a90e2;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #357ab7;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #f8f8f8;
+        border-radius: 4px;
+      }
+
+      .delete-btn {
+        background-color: #e74c3c;
+      }
+
+      .delete-btn:hover {
+        background-color: #c0392b;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- This script tag is where your bundled JS files from React will be injected -->
+    <script src="%PUBLIC_URL%/bundle.js"></script>
+  </body>
+</html>
