@@ -5,31 +5,34 @@ provider "aws" {
 
 # AWS Amplify App for hosting the React frontend
 resource "aws_amplify_app" "bucket_list_app" {
-  name       = "BucketListTracker"
-  repository = var.github_repository  # Use the variable for the GitHub repository URL
-  platform   = "WEB"
-  oauth_token = var.oauth_token  # Ensure this is set up correctly
+  name        = "BucketListTracker"
+  repository  = var.github_repository  # Use the GitHub repository URL
+  platform    = "WEB"
+  oauth_token = var.oauth_token  # Ensure this is correctly set up
+  
+  # Automatically create branches that match "main"
+  auto_branch_creation_patterns = ["main"]
 
   build_spec = <<EOF
 version: 1
-applications:
-  - frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm install
-        build:
-          commands:
-            - npm run build
-      artifacts:
-        baseDirectory: build
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
 EOF
 }
+
 
 # Associate Custom Domain with AWS Amplify
 resource "aws_amplify_domain_association" "custom_domain" {
