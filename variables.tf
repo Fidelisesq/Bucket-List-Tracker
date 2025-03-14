@@ -56,7 +56,7 @@ variable "cognito_user_pool_name" {
 variable "cognito_client_name" {
   description = "The name of the Cognito User Pool Client"
   type        = string
-  default     = "bucket-list-client"
+  default     = "fozapp-bucket-list-client"
 }
 
 # DynamoDB table name for storing bucket list items
