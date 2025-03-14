@@ -1,0 +1,12 @@
+{
+  "name": "bucket-list-tracker",
+  "version": "1.0.0",
+  "description": "Individuals can use the application to keep track of their personal goals and aspirations. Multiple users can manage shared bucket lists, such as family trips or group projects.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

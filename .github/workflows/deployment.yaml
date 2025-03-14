@@ -55,8 +55,8 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
-        env:
-            TF_LOG: DEBUG
+        #env:
+            #TF_LOG: DEBUG
 
   terraform_destroy:
     runs-on: ubuntu-latest
