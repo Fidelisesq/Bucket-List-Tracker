@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    # Trigger terraform_destroy only when commit message contains 'destroy'
+    # If you want to trigger this job based on commit message, you can use the following:
+    #   - name: Terraform Destroy
+    #     if: contains(github.event.head_commit.message, 'destroy')
   workflow_dispatch:
     inputs:
       action:
@@ -16,8 +20,10 @@ on:
           - destroy
 
 jobs:
-  terraform:
+  terraform_deploy:
     runs-on: ubuntu-latest
+    # Run terraform_deploy job only when 'action' input is 'apply' or it's a push event
+    if: github.event_name == 'push' || github.event.inputs.action == 'apply'
 
     steps:
       - name: Checkout Repository
@@ -35,6 +41,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Create terraform.tfvars
+        run: |
+          hosted_zone_id = "${{ secrets.HOSTED_ZONE_ID }}"
+
+      - name: Mask AWS Account ID in logs
+        run: echo "::add-mask::${{ secrets.AWS_ACCOUNT_ID }}"
+
       - name: Initialize Terraform
         run: terraform init
 
@@ -42,9 +55,33 @@ jobs:
         run: terraform plan
 
       - name: Terraform Apply
-        if: github.event_name == 'push' || github.event.inputs.action == 'apply'
         run: terraform apply -auto-approve
 
+  terraform_destroy:
+    runs-on: ubuntu-latest
+    # This job should run only when action is 'destroy' or commit message contains 'destroy'
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, 'destroy') || github.event.inputs.action == 'destroy'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: latest
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Additional Pre-Destroy Steps
+        run: |
+          echo "Running additional steps before destroy..."
+          # Add your custom steps here, such as notifying users or performing checks
+
       - name: Terraform Destroy
-        if: github.event.inputs.action == 'destroy'
         run: terraform destroy -auto-approve
