@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-    # Trigger terraform_destroy only when commit message contains 'destroy'
-    # If you want to trigger this job based on commit message, you can use the following:
-    #   - name: Terraform Destroy
-    #     if: contains(github.event.head_commit.message, 'destroy')
   workflow_dispatch:
     inputs:
       action:
@@ -22,8 +18,8 @@ on:
 jobs:
   terraform_deploy:
     runs-on: ubuntu-latest
-    # Run terraform_deploy job only when 'action' input is 'apply' or it's a push event
-    if: github.event_name == 'push' || github.event.inputs.action == 'apply'
+    # Skip deploy if commit message contains 'destroy'
+    if: github.event_name == 'push' && !contains(github.event.head_commit.message, 'destroy') || github.event.inputs.action == 'apply'
 
     steps:
       - name: Checkout Repository
@@ -47,7 +43,6 @@ jobs:
           hosted_zone_id = "${{ secrets.HOSTED_ZONE_ID }}"
           oauth_token = "${{ secrets.OAUTH_TOKEN }}"
           EOF
-          
         
       - name: Mask AWS Account ID in logs
         run: echo "::add-mask::${{ secrets.AWS_ACCOUNT_ID }}"
@@ -65,7 +60,7 @@ jobs:
 
   terraform_destroy:
     runs-on: ubuntu-latest
-    # This job should run only when action is 'destroy' or commit message contains 'destroy'
+    # Run destroy only if commit message contains 'destroy' or workflow_dispatch selects 'destroy'
     if: github.event_name == 'push' && contains(github.event.head_commit.message, 'destroy') || github.event.inputs.action == 'destroy'
 
     steps:
@@ -90,6 +85,7 @@ jobs:
           hosted_zone_id = "${{ secrets.HOSTED_ZONE_ID }}"
           oauth_token = "${{ secrets.OAUTH_TOKEN }}"
           EOF
+
       - name: Initiate Terraform
         run: terraform init
 
