@@ -10,6 +10,11 @@
       "StackName": "amplify-bucketlisttracker-dev-6c9e9",
       "StackId": "arn:aws:cloudformation:us-east-1:211125602758:stack/amplify-bucketlisttracker-dev-6c9e9/9680e7e0-0105-11f0-b261-0e45891c840f",
       "AmplifyAppId": "d38n6wd8tyjnn0"
+    },
+    "categories": {
+      "api": {
+        "bucketlisttracker": {}
+      }
     }
   }
 }
